@@ -28,16 +28,6 @@ export class CatsController {
     return 'This action returns all cats';
   }
 }
-@@switch
-import { Controller, Get } from '@nestjs/common';
-
-@Controller('cats')
-export class CatsController {
-  @Get()
-  findAll() {
-    return 'This action returns all cats';
-  }
-}
 ```
 
 ::: info HINT
@@ -75,17 +65,6 @@ import { Request } from 'express';
 export class CatsController {
   @Get()
   findAll(@Req() request: Request): string {
-    return 'This action returns all cats';
-  }
-}
-@@switch
-import { Controller, Bind, Get, Req } from '@nestjs/common';
-
-@Controller('cats')
-export class CatsController {
-  @Get()
-  @Bind(Req())
-  findAll(request) {
     return 'This action returns all cats';
   }
 }
@@ -134,21 +113,6 @@ export class CatsController {
 
   @Get()
   findAll(): string {
-    return 'This action returns all cats';
-  }
-}
-@@switch
-import { Controller, Get, Post } from '@nestjs/common';
-
-@Controller('cats')
-export class CatsController {
-  @Post()
-  create() {
-    return 'This action adds a new cat';
-  }
-
-  @Get()
-  findAll() {
     return 'This action returns all cats';
   }
 }
@@ -253,16 +217,8 @@ Routes with parameters should be declared after any static paths. This prevents 
 :::
 
 ```ts
-@@filename()
 @Get(':id')
 findOne(@Param() params: any): string {
-  console.log(params.id);
-  return `This action returns a #${params.id} cat`;
-}
-@@switch
-@Get(':id')
-@Bind(Param())
-findOne(params) {
   console.log(params.id);
   return `This action returns a #${params.id} cat`;
 }
@@ -277,15 +233,8 @@ Import `Param` from the `@nestjs/common` package.
 :::
 
 ```ts
-@@filename()
 @Get(':id')
 findOne(@Param('id') id: string): string {
-  return `This action returns a #${id} cat`;
-}
-@@switch
-@Get(':id')
-@Bind(Param('id'))
-findOne(id) {
   return `This action returns a #${id} cat`;
 }
 ```
@@ -345,11 +294,6 @@ Every async function has to return a `Promise`. This means that you can return a
 async findAll(): Promise<any[]> {
   return [];
 }
-@@switch
-@Get()
-async findAll() {
-  return [];
-}
 ```
 
 The above code is fully valid. Furthermore, Nest route handlers are even more powerful by being able to return RxJS [observable streams](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html). Nest will automatically subscribe to the source underneath and take the last emitted value (once the stream is completed).
@@ -357,11 +301,6 @@ The above code is fully valid. Furthermore, Nest route handlers are even more po
 ```ts
 @Get()
 findAll(): Observable<any[]> {
-  return of([]);
-}
-@@switch
-@Get()
-findAll() {
   return of([]);
 }
 ```
@@ -391,12 +330,6 @@ It has only three basic properties. Thereafter we can use the newly created DTO 
 async create(@Body() createCatDto: CreateCatDto) {
   return 'This action adds a new cat';
 }
-@@switch
-@Post()
-@Bind(Body())
-async create(createCatDto) {
-  return 'This action adds a new cat';
-}
 ```
 
 ::: info HINT
@@ -414,7 +347,16 @@ There's a separate chapter about handling errors (i.e., working with exceptions)
 Below is an example that makes use of several of the available decorators to create a basic controller. This controller exposes a couple of methods to access and manipulate internal data.
 
 ```ts
-import { Controller, Get, Query, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto';
 
 @Controller('cats')
@@ -441,42 +383,6 @@ export class CatsController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return `This action removes a #${id} cat`;
-  }
-}
-@@switch
-import { Controller, Get, Query, Post, Body, Put, Param, Delete, Bind } from '@nestjs/common';
-
-@Controller('cats')
-export class CatsController {
-  @Post()
-  @Bind(Body())
-  create(createCatDto) {
-    return 'This action adds a new cat';
-  }
-
-  @Get()
-  @Bind(Query())
-  findAll(query) {
-    console.log(query);
-    return `This action returns all cats (limit: ${query.limit} items)`;
-  }
-
-  @Get(':id')
-  @Bind(Param('id'))
-  findOne(id) {
-    return `This action returns a #${id} cat`;
-  }
-
-  @Put(':id')
-  @Bind(Param('id'), Body())
-  update(id, updateCatDto) {
-    return `This action updates a #${id} cat`;
-  }
-
-  @Delete(':id')
-  @Bind(Param('id'))
-  remove(id) {
     return `This action removes a #${id} cat`;
   }
 }
@@ -523,24 +429,7 @@ export class CatsController {
 
   @Get()
   findAll(@Res() res: Response) {
-     res.status(HttpStatus.OK).json([]);
-  }
-}
-@@switch
-import { Controller, Get, Post, Bind, Res, Body, HttpStatus } from '@nestjs/common';
-
-@Controller('cats')
-export class CatsController {
-  @Post()
-  @Bind(Res(), Body())
-  create(res, createCatDto) {
-    res.status(HttpStatus.CREATED).send();
-  }
-
-  @Get()
-  @Bind(Res())
-  findAll(res) {
-     res.status(HttpStatus.OK).json([]);
+    res.status(HttpStatus.OK).json([]);
   }
 }
 ```
@@ -552,13 +441,6 @@ Also, in the example above, you lose compatibility with Nest features that depen
 ```ts
 @Get()
 findAll(@Res({ passthrough: true }) res: Response) {
-  res.status(HttpStatus.OK);
-  return [];
-}
-@@switch
-@Get()
-@Bind(Res({ passthrough: true }))
-findAll(res) {
   res.status(HttpStatus.OK);
   return [];
 }

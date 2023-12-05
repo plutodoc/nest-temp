@@ -13,6 +13,9 @@ export default defineConfig({
     dark: '/rspress-dark-logo.png',
   },
   themeConfig: {
+    footer: {
+      message: `Copyright © 2020-${new Date().getFullYear()} My Project, Inc. Built with Rspress`,
+    },
     hideNavbar: 'auto',
     search: false,
     sidebar: {
@@ -63,6 +66,5 @@ export default defineConfig({
   },
   markdown: {
     // checkDeadLinks: true,
-    highlightLanguages: ['ejs'],
   },
 });
