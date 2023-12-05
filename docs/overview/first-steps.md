@@ -38,7 +38,7 @@ The `project-name` directory will be created, node modules and a few other boile
 
 Here's a brief overview of those core files:
 
-|                          |                                                                                                                     |
+| File                     |                                                                                                                     |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------- |
 | `app.controller.ts`      | A basic controller with a single route.                                                                             |
 | `app.controller.spec.ts` | The unit tests for the controller.                                                                                  |

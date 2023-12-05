@@ -31,10 +31,15 @@ export default defineConfig({
         },
         {
           text: 'OVERVIEW',
+          collapsible: false,
           items: [
             {
               text: 'First steps',
               link: '/overview/first-steps',
+            },
+            {
+              text: 'Controllers',
+              link: '/overview/controllers',
             },
           ],
         },
