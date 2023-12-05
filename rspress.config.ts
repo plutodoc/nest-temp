@@ -9,8 +9,8 @@ export default defineConfig({
   description: 'About Nest',
   icon: '/favicon.ico',
   logo: {
-    light: '/rspress-light-logo.png',
-    dark: '/rspress-dark-logo.png',
+    light: '/nest-light-logo.webp',
+    dark: '/nest-dark-logo.webp',
   },
   themeConfig: {
     footer: {
