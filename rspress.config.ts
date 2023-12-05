@@ -92,6 +92,16 @@ export default defineConfig({
             },
           ],
         },
+        {
+          text: 'TECHNIQUES',
+          collapsible: false,
+          items: [
+            {
+              text: 'Configuration',
+              link: '/techniques/configuration',
+            },
+          ],
+        },
       ],
     },
     socialLinks: [
