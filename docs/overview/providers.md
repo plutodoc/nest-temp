@@ -16,8 +16,7 @@ Since Nest enables the possibility to design and organize dependencies in a more
 
 Let's start by creating a simple `CatsService`. This service will be responsible for data storage and retrieval, and is designed to be used by the `CatsController`, so it's a good candidate to be defined as a provider.
 
-```typescript
-@@filename(cats.service)
+```ts
 import { Injectable } from '@nestjs/common';
 import { Cat } from './interfaces/cat.interface';
 
@@ -33,31 +32,17 @@ export class CatsService {
     return this.cats;
   }
 }
-@@switch
-import { Injectable } from '@nestjs/common';
-
-@Injectable()
-export class CatsService {
-  constructor() {
-    this.cats = [];
-  }
-
-  create(cat) {
-    this.cats.push(cat);
-  }
-
-  findAll() {
-    return this.cats;
-  }
-}
 ```
 
-> info **Hint** To create a service using the CLI, simply execute the `$ nest g service cats` command.
+::: info Hint
+
+To create a service using the CLI, simply execute the `$ nest g service cats` command.
+
+:::
 
 Our `CatsService` is a basic class with one property and two methods. The only new feature is that it uses the `@Injectable()` decorator. The `@Injectable()` decorator attaches metadata, which declares that `CatsService` is a class that can be managed by the Nest [IoC](https://en.wikipedia.org/wiki/Inversion_of_control) container. By the way, this example also uses a `Cat` interface, which probably looks something like this:
 
-```typescript
-@@filename(interfaces/cat.interface)
+```ts
 export interface Cat {
   name: string;
   age: number;
@@ -67,8 +52,7 @@ export interface Cat {
 
 Now that we have a service class to retrieve cats, let's use it inside the `CatsController`:
 
-```typescript
-@@filename(cats.controller)
+```ts
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { CatsService } from './cats.service';
@@ -88,28 +72,6 @@ export class CatsController {
     return this.catsService.findAll();
   }
 }
-@@switch
-import { Controller, Get, Post, Body, Bind, Dependencies } from '@nestjs/common';
-import { CatsService } from './cats.service';
-
-@Controller('cats')
-@Dependencies(CatsService)
-export class CatsController {
-  constructor(catsService) {
-    this.catsService = catsService;
-  }
-
-  @Post()
-  @Bind(Body())
-  async create(createCatDto) {
-    this.catsService.create(createCatDto);
-  }
-
-  @Get()
-  async findAll() {
-    return this.catsService.findAll();
-  }
-}
 ```
 
 The `CatsService` is **injected** through the class constructor. Notice the use of the `private` syntax. This shorthand allows us to both declare and initialize the `catsService` member immediately in the same location.
@@ -120,7 +82,7 @@ Nest is built around the strong design pattern commonly known as **Dependency in
 
 In Nest, thanks to TypeScript capabilities, it's extremely easy to manage dependencies because they are resolved just by type. In the example below, Nest will resolve the `catsService` by creating and returning an instance of `CatsService` (or, in the normal case of a singleton, returning the existing instance if it has already been requested elsewhere). This dependency is resolved and passed to your controller's constructor (or assigned to the indicated property):
 
-```typescript
+```ts
 constructor(private catsService: CatsService) {}
 ```
 
@@ -138,7 +100,7 @@ Occasionally, you might have dependencies which do not necessarily have to be re
 
 To indicate a provider is optional, use the `@Optional()` decorator in the constructor's signature.
 
-```typescript
+```ts
 import { Injectable, Optional, Inject } from '@nestjs/common';
 
 @Injectable()
@@ -153,7 +115,7 @@ Note that in the example above we are using a custom provider, which is the reas
 
 The technique we've used so far is called constructor-based injection, as providers are injected via the constructor method. In some very specific cases, **property-based injection** might be useful. For instance, if your top-level class depends on either one or multiple providers, passing them all the way up by calling `super()` in sub-classes from the constructor can be very tedious. In order to avoid this, you can use the `@Inject()` decorator at the property level.
 
-```typescript
+```ts
 import { Injectable, Inject } from '@nestjs/common';
 
 @Injectable()
@@ -173,8 +135,7 @@ If your class doesn't extend another class, you should always prefer using **con
 
 Now that we have defined a provider (`CatsService`), and we have a consumer of that service (`CatsController`), we need to register the service with Nest so that it can perform the injection. We do this by editing our module file (`app.module.ts`) and adding the service to the `providers` array of the `@Module()` decorator.
 
-```typescript
-@@filename(app.module)
+```ts
 import { Module } from '@nestjs/common';
 import { CatsController } from './cats/cats.controller';
 import { CatsService } from './cats/cats.service';
@@ -190,26 +151,18 @@ Nest will now be able to resolve the dependencies of the `CatsController` class.
 
 This is how our directory structure should look now:
 
-<div class="file-tree">
-<div class="item">src</div>
-<div class="children">
-<div class="item">cats</div>
-<div class="children">
-<div class="item">dto</div>
-<div class="children">
-<div class="item">create-cat.dto.ts</div>
-</div>
-<div class="item">interfaces</div>
-<div class="children">
-<div class="item">cat.interface.ts</div>
-</div>
-<div class="item">cats.controller.ts</div>
-<div class="item">cats.service.ts</div>
-</div>
-<div class="item">app.module.ts</div>
-<div class="item">main.ts</div>
-</div>
-</div>
+```
+src
+├── cats
+│   ├── dto
+│   │   └── create-cat.dto.ts
+│   ├── interfaces
+|   │   └── cat.interface.ts
+│   ├── cats.controller.ts
+│   └── cats.service.ts
+├── app.module.ts
+└── main.ts
+```
 
 ## Manual instantiation
 
