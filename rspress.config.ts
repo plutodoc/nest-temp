@@ -52,6 +52,14 @@ export default defineConfig({
               text: 'Modules',
               link: '/overview/modules',
             },
+            {
+              text: 'Middleware',
+              link: '/overview/middleware',
+            },
+            {
+              text: 'Exception filters',
+              link: '/overview/exception-filters',
+            },
           ],
         },
       ],
