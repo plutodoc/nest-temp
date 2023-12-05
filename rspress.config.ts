@@ -7,7 +7,7 @@ export default defineConfig({
   root: path.join(__dirname, 'docs'),
   title: 'Nest',
   description: 'About Nest',
-  icon: '/rspress-icon.png',
+  icon: '/favicon.ico',
   logo: {
     light: '/rspress-light-logo.png',
     dark: '/rspress-dark-logo.png',
@@ -63,6 +63,18 @@ export default defineConfig({
             {
               text: 'Pipes',
               link: '/overview/pipes',
+            },
+            {
+              text: 'Guards',
+              link: '/overview/guards',
+            },
+            {
+              text: 'Interceptors',
+              link: '/overview/interceptors',
+            },
+            {
+              text: 'Custom decorators',
+              link: '/overview/custom-decorators',
             },
           ],
         },
