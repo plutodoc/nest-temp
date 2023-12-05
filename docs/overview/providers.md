@@ -6,7 +6,7 @@ Providers are a fundamental concept in Nest. Many of the basic Nest classes may 
 
 In the previous chapter, we built a simple `CatsController`. Controllers should handle HTTP requests and delegate more complex tasks to **providers**. Providers are plain JavaScript classes that are declared as `providers` in a [module](/modules).
 
-:: info Hint
+::: info Hint
 
 Since Nest enables the possibility to design and organize dependencies in a more OO way, we strongly recommend following the [SOLID](https://en.wikipedia.org/wiki/SOLID) principles.
 
@@ -169,7 +169,7 @@ If your class doesn't extend another class, you should always prefer using **con
 
 :::
 
-#### Provider registration
+## Provider registration
 
 Now that we have defined a provider (`CatsService`), and we have a consumer of that service (`CatsController`), we need to register the service with Nest so that it can perform the injection. We do this by editing our module file (`app.module.ts`) and adding the service to the `providers` array of the `@Module()` decorator.
 
@@ -211,7 +211,7 @@ This is how our directory structure should look now:
 </div>
 </div>
 
-#### Manual instantiation
+## Manual instantiation
 
 Thus far, we've discussed how Nest automatically handles most of the details of resolving dependencies. In certain circumstances, you may need to step outside of the built-in Dependency Injection system and manually retrieve or instantiate providers. We briefly discuss two such topics below.
 
