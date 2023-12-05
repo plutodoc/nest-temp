@@ -86,6 +86,10 @@ export default defineConfig({
               text: 'Custom providers',
               link: '/fundamentals/custom-providers',
             },
+            {
+              text: 'Asynchronous providers',
+              link: '/fundamentals/async-providers',
+            },
           ],
         },
       ],
