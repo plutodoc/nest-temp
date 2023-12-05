@@ -41,6 +41,10 @@ export default defineConfig({
               text: 'Controllers',
               link: '/overview/controllers',
             },
+            {
+              text: 'Providers',
+              link: '/overview/providers',
+            },
           ],
         },
       ],
