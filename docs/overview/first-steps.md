@@ -21,20 +21,22 @@ $ npm i -g @nestjs/cli
 $ nest new project-name
 ```
 
-> info **Hint** To create a new project with TypeScript's [stricter](https://www.typescriptlang.org/tsconfig#strict) feature set, pass the `--strict` flag to the `nest new` command.
+::: info HINT
+
+To create a new project with TypeScript's [stricter](https://www.typescriptlang.org/tsconfig#strict) feature set, pass the `--strict` flag to the `nest new` command.
+
+:::
 
 The `project-name` directory will be created, node modules and a few other boilerplate files will be installed, and a `src/` directory will be created and populated with several core files.
 
-<div class="file-tree">
-  <div class="item">src</div>
-  <div class="children">
-    <div class="item">app.controller.spec.ts</div>
-    <div class="item">app.controller.ts</div>
-    <div class="item">app.module.ts</div>
-    <div class="item">app.service.ts</div>
-    <div class="item">main.ts</div>
-  </div>
-</div>
+```
+src
+├── app.controller.spec.ts
+├── app.controller.ts
+├── app.module.ts
+├── app.service.ts
+└── main.ts
+```
 
 Here's a brief overview of those core files:
 
@@ -48,9 +50,7 @@ Here's a brief overview of those core files:
 
 The `main.ts` includes an async function, which will **bootstrap** our application:
 
-```typescript
-@@filename(main)
-
+```ts
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
@@ -74,13 +74,17 @@ To create a Nest application instance, we use the core `NestFactory` class. `Nes
 
 Note that a project scaffolded with the Nest CLI creates an initial project structure that encourages developers to follow the convention of keeping each module in its own dedicated directory.
 
-> info **Hint** By default, if any error happens while creating the application your app will exit with the code `1`. If you want to make it throw an error instead disable the option `abortOnError` (e.g., `NestFactory.create(AppModule, {{ '{' }} abortOnError: false {{ '}' }})`).
+::: info HINT
+
+By default, if any error happens while creating the application your app will exit with the code `1`. If you want to make it throw an error instead disable the option `abortOnError` (e.g., `NestFactory.create(AppModule, {{ '{' }} abortOnError: false {{ '}' }})`).
+
+:::
 
 ### Platform
 
 Nest aims to be a platform-agnostic framework. Platform independence makes it possible to create reusable logical parts that developers can take advantage of across several different types of applications. Technically, Nest is able to work with any Node HTTP framework once an adapter is created. There are two HTTP platforms supported out-of-the-box: [express](https://expressjs.com/) and [fastify](https://www.fastify.io). You can choose the one that best suits your needs.
 
-|                    |                                                                                                                                                                                                                                                                                                                                    |
+| Platform           |                                                                                                                                                                                                                                                                                                                                    |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `platform-express` | [Express](https://expressjs.com/) is a well-known minimalist web framework for node. It's a battle tested, production-ready library with lots of resources implemented by the community. The `@nestjs/platform-express` package is used by default. Many users are well served with Express, and need take no action to enable it. |
 | `platform-fastify` | [Fastify](https://www.fastify.io/) is a high performance and low overhead framework highly focused on providing maximum efficiency and speed. Read how to use it [here](/techniques/performance).                                                                                                                                  |
@@ -89,7 +93,7 @@ Whichever platform is used, it exposes its own application interface. These are 
 
 When you pass a type to the `NestFactory.create()` method, as in the example below, the `app` object will have methods available exclusively for that specific platform. Note, however, you don't **need** to specify a type **unless** you actually want to access the underlying platform API.
 
-```typescript
+```ts
 const app = await NestFactory.create<NestExpressApplication>(AppModule);
 ```
 
@@ -101,7 +105,11 @@ Once the installation process is complete, you can run the following command at 
 $ npm run start
 ```
 
-> info **Hint** To speed up the development process (x20 times faster builds), you can use the [SWC builder](/recipes/swc) by passing the `-b swc` flag to the `start` script, as follows `npm run start -- -b swc`.
+::: info HINT
+
+To speed up the development process (x20 times faster builds), you can use the [SWC builder](/recipes/swc) by passing the `-b swc` flag to the `start` script, as follows `npm run start -- -b swc`.
+
+:::
 
 This command starts the app with the HTTP server listening on the port defined in the `src/main.ts` file. Once the application is running, open your browser and navigate to `http://localhost:3000/`. You should see the `Hello World!` message.
 
@@ -117,7 +125,11 @@ This command will watch your files, automatically recompiling and reloading the 
 
 [CLI](/cli/overview) provides best effort to scaffold a reliable development workflow at scale. Thus, a generated Nest project comes with both a code **linter** and **formatter** preinstalled (respectively [eslint](https://eslint.org/) and [prettier](https://prettier.io/)).
 
-> info **Hint** Not sure about the role of formatters vs linters? Learn the difference [here](https://prettier.io/docs/en/comparison.html).
+::: info HINT
+
+Not sure about the role of formatters vs linters? Learn the difference [here](https://prettier.io/docs/en/comparison.html).
+
+:::
 
 To ensure maximum stability and extensibility, we use the base [`eslint`](https://www.npmjs.com/package/eslint) and [`prettier`](https://www.npmjs.com/package/prettier) cli packages. This setup allows neat IDE integration with official extensions by design.
 
